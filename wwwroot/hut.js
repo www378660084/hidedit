@@ -936,7 +936,7 @@ var HIDUsagePage = {
     MagStripeReader:        { value: 0x8E, usage: null, name: "Magnetic Stripe Reading" },
     PointOfSale:            { value: 0x8F, usage: null, name: "Reserved Point of Sale" },
     Camera:                 { value: 0x90, usage: null, name: "Camera" },
-    VendorDefined:          { value: 0xFF, usage: HIDUsageVendor, name: "Vendor Defined" },
+    VendorDefined:          { value: 0xFF00, usage: HIDUsageVendor, name: "Vendor Defined" },
     name: "HIDUsagePage"
 };
 
