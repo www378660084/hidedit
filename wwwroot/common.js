@@ -49,11 +49,21 @@ function dec2hex(dec, padToLength) {
         while (ret.length < padToLength)
             ret = "0" + ret;
     }
-    return ret;
+	var result = "";
+	var len = ret.length/2;
+	for(var i=0;i<len;i++){
+		result = ret.substring(i*2,i*2+2) + result;
+	}
+    return result;
 }
 
 function hex2dec(hex) {
-    return parseInt(hex, 16);
+	var len = hex.length /2;
+	var result = "";
+	for(var i=0;i<len;i++){
+		result = hex.substring(i*2,i*2+2) + result;
+	}
+	return parseInt(result, 16);
 }
 
 function parseEnum(value, type) {
@@ -128,9 +138,9 @@ var reportsView = null;
 
 // Code components
 var scripts = {
+  "hid-report.js": null,
 	"hid-stream.js": null,
 	"hut.js": null,
-	"hid-report.js": null,
 	"hid.js": null,
 	"hid-run-state.js": null,
 	"hid-run.js": null,

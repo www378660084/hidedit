@@ -25,6 +25,7 @@ var ToolbarButton = {
     EditItem:   { value: 5, name: "EditItem",   title: "Edit selected item..." },
     AddReport:  { value: 6, name: "AddReport",  title: "Add report..." },
     DelReport:  { value: 7, name: "DelReport",  title: "Delete report..." },
+	LoadText:   {value:8, name: "LoadText" , title:"Load from text..."} ,
     name: "ToolbarButton"
 };
 
@@ -223,8 +224,20 @@ function onLoadClicked()
 
 function onSaveClicked()
 {
-    var hex = descriptor.pack();
-    prompt("The current descriptor's hex dump is below. You may copy it if you want to use it elsewhere:",hex);
+  $("#textinput").val(descriptor.toString());
+	$("#inputText").dialog({
+		model:true,
+		buttons:{
+			OK:function(){
+				$("#textinput").val("");
+				$(this).dialog("close");
+			},
+			Cancel:function(){
+				$("#textinput").val("");
+				$(this).dialog("close");
+			}
+		}
+	});
 }
 
 function onAddItemClicked() {
@@ -273,7 +286,41 @@ function onEditItemOK() {
 function onAddReportClicked()
 {
 }
+function loadInput(){
+	var input = $("#textinput").val();
+    input = input.replace(/\/.*/g,"").replace(/\W+/g," ").replace(/0[xX]/g,"");
+	var s = new ReadStream(input);
+	var newDesc = new HIDDescriptor();
 
+	try
+	{
+		newDesc.parse(s);
+	}
+	catch (error)
+	{
+		alert(error);
+		return;
+	}
+
+    descriptor = newDesc;
+    onDescriptorChanged();
+}
+function onLoadTextClicked(){
+	$("#inputText").dialog({
+		model:true,
+		buttons:{
+			OK:function(){
+				loadInput();
+				$("#textinput").val("");
+				$(this).dialog("close");
+			},
+			Cancel:function(){
+				$("#textinput").val("");
+				$(this).dialog("close");
+			}
+		}
+	});
+}
 function onDelReportClicked()
 {
 }

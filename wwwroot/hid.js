@@ -193,6 +193,31 @@ HIDItem.prototype.pack = function (stream) {
     stream.writeData(this.data, size);
 };
 
+function i2h(x,size){
+  var result = "";
+  var r = "";
+  
+  for(var j=0;j<size;j++){
+    var i = (x >> j) & 0xFF;
+    r = i.toString(16);
+    r =  r.length == 1 ? "0" + r :r;
+    result +=  "0x" + r + ",";
+  }
+  
+  return result;
+}
+
+HIDItem.prototype.toString = function () {
+    var result = "";
+    var size = sizeForData(this.data);
+    var prefix = packHIDItemPrefix(this.tag.value, this.type.value, size);
+    
+    result += i2h(prefix,1);
+    result += i2h(this.data,size);
+    result += "\t\t/* " + this.elem.textContent + " */\n";
+    return result
+};
+
 function HIDDescriptor() {
     this.items = new Array();
 }
@@ -206,6 +231,16 @@ HIDDescriptor.prototype.parse = function (stream) {
         item.parse(stream);
         this.items.push(item);
     }
+};
+
+HIDDescriptor.prototype.toString = function () {
+    var result = "";
+    for (var index in this.items)
+    {
+        var item = this.items[index];
+        result += item.toString();
+    }
+    return result;
 };
 
 HIDDescriptor.prototype.pack = function () {
