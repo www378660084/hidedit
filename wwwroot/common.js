@@ -49,12 +49,12 @@ function dec2hex(dec, padToLength) {
         while (ret.length < padToLength)
             ret = "0" + ret;
     }
-	var result = "";
-	var len = ret.length/2;
-	for(var i=0;i<len;i++){
-		result = ret.substring(i*2,i*2+2) + result;
-	}
-    return result;
+	//var result = "";
+	//var len = ret.length/2;
+	//for(var i=0;i<len;i++){
+	//	result = ret.substring(i*2,i*2+2) + result;
+	//}
+    return ret;
 }
 
 function hex2dec(hex) {
@@ -77,7 +77,8 @@ function parseEnum(value, type) {
                 return candObj;
         }
     }
-    throw "Value " + value + " (0x" + dec2hex(value) + ") is not part of " + type.name;
+    return {"name":"unknown "+value,"value":value};
+    //throw "Value " + value + " (0x" + dec2hex(value) + ") is not part of " + type.name;
 }
 
 function cleanHex(data) {

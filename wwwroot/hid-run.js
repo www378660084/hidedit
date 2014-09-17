@@ -152,8 +152,10 @@ HIDRun.prototype.runItem = function (item) {
 			if (this.state.usagePage.usage == null)
 				throw "Usage page " + this.state.usagePage.name + " does not contain usages";
 			item.usagePage = this.state.usagePage;
+      
 
-			this.state.usageMax = parseEnum(item.data, this.state.usagePage.usage);
+      this.state.usageMax = parseEnum(item.data, this.state.usagePage.usage);
+
 			item.dataDesc = this.state.usageMax.name;
 			break;
 		case HIDItemGlobalTag.PhysicalMinimum:
